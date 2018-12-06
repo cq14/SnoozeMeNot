@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SnoozeMeNot</string>
+    <string-array name="AMPM">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+</resources>

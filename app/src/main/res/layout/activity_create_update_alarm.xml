@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateUpdateAlarm">
+
+    <TextView
+        android:id="@+id/label_header"
+        android:layout_width="109dp"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:text="New Alarm" />
+
+    <EditText
+        android:id="@+id/edit_time"
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="171dp"
+        android:ems="10"
+        android:hint="Please Enter a Time"
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/am_pm"
+        android:layout_width="117dp"
+        android:layout_height="46dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/edit_time"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/AMPM" />
+
+    <CheckBox
+        android:id="@+id/qr_check"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/label_header"
+        android:layout_marginBottom="233dp"
+        android:text="Scan QR" />
+
+    <TextView
+        android:id="@+id/method"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/qr_check"
+        android:layout_centerVertical="true"
+        android:text="How would you like to turn off" />
+
+    <CheckBox
+        android:id="@+id/gps_check"
+        android:layout_width="146dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/label_header"
+        android:layout_marginBottom="191dp"
+        android:text="GPS" />
+
+</RelativeLayout>
