@@ -8,12 +8,12 @@
 
     <TextView
         android:id="@+id/label_header"
-        android:layout_width="109dp"
-        android:layout_height="47dp"
+        android:layout_width="226dp"
+        android:layout_height="84dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp"
-        android:text="New Alarm" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_time"
@@ -40,26 +40,36 @@
         android:id="@+id/qr_check"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/label_header"
-        android:layout_marginBottom="233dp"
+        android:layout_alignStart="@+id/edit_time"
+        android:layout_below="@+id/gps_check"
         android:text="Scan QR" />
 
     <TextView
         android:id="@+id/method"
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/qr_check"
-        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/edit_time"
+        android:layout_marginTop="238dp"
         android:text="How would you like to turn off" />
 
     <CheckBox
         android:id="@+id/gps_check"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/label_header"
-        android:layout_marginBottom="191dp"
+        android:layout_alignStart="@+id/edit_time"
+        android:layout_centerVertical="true"
         android:text="GPS" />
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="157dp"
+        android:background="@color/colorAccent"
+        android:text="Button"
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>
