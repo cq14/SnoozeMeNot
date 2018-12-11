@@ -18,9 +18,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        /*
+        //use alarm trigger to trip alarm when time is met
+        AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
         PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(),0,i,0);
-        manager.set(AlarmManager.RTC_WAKEUP, System)*/
+        manager.set(AlarmManager.RTC_WAKEUP, System)
+        */
 
 
         createAlarm = findViewById(R.id.create_alarm);
