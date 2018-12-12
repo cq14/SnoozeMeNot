@@ -2,6 +2,8 @@ package edu.fsu.cs.mobile.snoozemenot;
 
 import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +17,14 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CreateUpdateAlarm extends AppCompatActivity {
 
     Toolbar myToolbar;
-    EditText time_entry;
+    TextInputLayout timeTextLayout;
+    TextInputEditText time_entry;
     Spinner am_pm;
     RadioButton qr, gps;
     MaterialButton submit;
@@ -28,25 +34,23 @@ public class CreateUpdateAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_update_alarm);
         myToolbar = findViewById(R.id.create_edit_app_bar);
+        timeTextLayout = findViewById(R.id.time_text_input);
         setSupportActionBar(myToolbar);
-        String mode="";
-        time_entry=findViewById(R.id.time_entry);
-        am_pm=findViewById(R.id.am_pm);
-        qr=findViewById(R.id.qr_radiobutton);
-        gps=findViewById(R.id.gps_radiobutton);
-        submit= findViewById(R.id.submit_button);
+        String mode = "";
+        time_entry = findViewById(R.id.time_entry);
+        am_pm = findViewById(R.id.am_pm);
+        qr = findViewById(R.id.qr_radiobutton);
+        gps = findViewById(R.id.gps_radiobutton);
+        submit = findViewById(R.id.submit_button);
         mode = getIntent().getStringExtra("mode");
 
         //Dealing with the Label only
-        if(mode.equals("create"))
-        {
-            Log.i("Create","create mode");
+        if (mode.equals("create")) {
+            Log.i("Create", "create mode");
             myToolbar.setTitle("Create New Alarm");
             submit.setText("Create");
-        }
-        else
-        {
-            Log.i("Create","edit mode");
+        } else {
+            Log.i("Create", "edit mode");
             myToolbar.setTitle("Edit Alarm");
             submit.setText("Update");
             //To Do: predefine these values based on existing alarm info
@@ -56,10 +60,10 @@ public class CreateUpdateAlarm extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isTimeValid(time_entry.getText())){
-                    time_entry.setError("Set valid time.");
+                if (!isTimeValid(time_entry.getText())) {
+                    timeTextLayout.setError("Set valid time");
                 } else {
-                    time_entry.setError(null);
+                    timeTextLayout.setError(null);
                     //Create alarm here
                 }
             }
@@ -68,24 +72,11 @@ public class CreateUpdateAlarm extends AppCompatActivity {
     }
 
     private boolean isTimeValid(@Nullable Editable text) {
-        boolean verify;
-        String time = text.toString();
-        if(time.length() == 5 && (time.charAt(0)!='1' || time.charAt(2)!=':' || time.charAt(3) - '0' >= 6)) {
-            verify = false;
-            Log.i("CreateUpdateAlarm","length5");
-            Log.i("CreateUpdateAlarm","time.char(0): "+time.charAt(0));
-            Log.i("CreateUpdateAlarm","time.char(2): "+time.charAt(2));
-            Log.i("CreateUpdateAlarm","time.char(3): "+time.charAt(3));
-        }
-
-        else if(time.length()==4 && time.charAt(2)- '0' >= 6 && time.charAt(1)!=':') {
-            verify = false;
-            Log.i("CreateUpdateAlarm","length4");
-            Log.i("CreateUpdateAlarm", "time.char(2): " + time.charAt(2));
-            Log.i("CreateUpdateAlarm","time.charAt(1): " +time.charAt(1));
-        }
-        else
-            verify = true;
-        return text != null && verify;
+        Pattern pattern;
+        Matcher matcher;
+        String TIME12HOURS_PATTERN = "^(0?[1-9]|1[0-2]):[0-5][0-9]$";
+        pattern = Pattern.compile(TIME12HOURS_PATTERN);
+        matcher = pattern.matcher(text.toString());
+        return matcher.matches();
     }
 }
