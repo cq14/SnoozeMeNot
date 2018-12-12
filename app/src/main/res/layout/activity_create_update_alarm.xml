@@ -36,40 +36,53 @@
         android:layout_marginEnd="16dp"
         android:entries="@array/AMPM" />
 
-    <CheckBox
-        android:id="@+id/qr_check"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_time"
-        android:layout_below="@+id/gps_check"
-        android:text="Scan QR" />
-
     <TextView
         android:id="@+id/method"
         android:layout_width="wrap_content"
         android:layout_height="51dp"
+        android:layout_alignStart="@+id/edit_time"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/edit_time"
         android:layout_marginTop="238dp"
-        android:text="How would you like to turn off" />
+        android:text="How would you like to turn off"
+        android:textColor="@color/textColorPrimary"
+        android:typeface="monospace"
+        app:fontFamily="@font/roboto" />
 
-    <CheckBox
-        android:id="@+id/gps_check"
-        android:layout_width="146dp"
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_time"
-        android:layout_centerVertical="true"
-        android:text="GPS" />
+        android:layout_alignTop="@+id/method"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="273dp"
+        android:layout_marginRight="273dp"
+        android:checkedButton="@+id/first"
+        android:orientation="vertical">
 
-    <Button
+        <RadioButton
+            android:id="@+id/gps_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:text="GPS" />
+
+        <RadioButton
+            android:id="@+id/qr_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:text="QR Code" />
+    </RadioGroup>
+
+    <android.support.design.button.MaterialButton
         android:id="@+id/submit_button"
+        style="@style/Widget.SnoozeMeNot.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="157dp"
-        android:background="@color/colorAccent"
-        android:text="Button"
-        android:textColor="@android:color/background_light" />
+        android:text="@string/button_submit" />
 
 </RelativeLayout>
