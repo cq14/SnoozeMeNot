@@ -15,6 +15,15 @@
         <item name="titleTextAppearance">@style/TextAppearance.SnoozeMeNot.Toolbar</item>
     </style>
 
+    <style name="Widget.SnoozeMeNot.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.SnoozeMeNot.TextInputLayout.HintText</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="TextAppearance.SnoozeMeNot.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="Widget.SnoozeMeNot.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="backgroundTint">?attr/colorPrimaryDark</item>

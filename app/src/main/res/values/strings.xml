@@ -3,6 +3,8 @@
     <string name="qr_code_radio_text">QR Code</string>
     <string name="gps_radio_text">GPS</string>
     <string name="button_submit">Submit</string>
+    <string name="settings_text">Settings</string>
+    <string name="create_heading">Create New Alarm</string>
     <string-array name="AMPM">
         <item>AM</item>
         <item>PM</item>

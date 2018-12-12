@@ -15,8 +15,9 @@
         android:layout_marginTop="43dp"
         android:src="@drawable/qrcode"/>
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/share_button"
+        style="@style/Widget.SnoozeMeNot.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

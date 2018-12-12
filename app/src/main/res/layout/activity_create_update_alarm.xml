@@ -4,85 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CreateUpdateAlarm">
 
-    <TextView
-        android:id="@+id/label_header"
-        android:layout_width="226dp"
-        android:layout_height="84dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/edit_time"
-        android:layout_width="187dp"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="171dp"
-        android:ems="10"
-        android:hint="Please Enter a Time"
-        android:inputType="textPersonName" />
+        android:elevation="48dp">
 
-    <Spinner
-        android:id="@+id/am_pm"
-        android:layout_width="117dp"
-        android:layout_height="46dp"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/create_edit_app_bar"
+            style="@style/Widget.SnoozeMeNot.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/create_heading" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/Widget.SnoozeMeNot.TextInputLayout"
+        android:layout_width="208dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/edit_time"
-        android:layout_marginEnd="16dp"
-        android:entries="@array/AMPM" />
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="145dp"
+        android:hint="Time">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/time_entry"
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:inputType="time" />
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/method"
         android:layout_width="wrap_content"
         android:layout_height="51dp"
-        android:layout_alignStart="@+id/edit_time"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="238dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="182dp"
+        android:layout_marginEnd="167dp"
         android:text="How would you like to turn off"
         android:textColor="@color/textColorPrimary"
         android:typeface="monospace"
         app:fontFamily="@font/roboto" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/method"
+    <Spinner
+        android:id="@+id/am_pm"
+        android:layout_width="105dp"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="273dp"
-        android:layout_marginRight="273dp"
-        android:checkedButton="@+id/first"
-        android:orientation="vertical">
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginEnd="126dp"
+        android:entries="@array/AMPM" />
 
-        <RadioButton
-            android:id="@+id/gps_radiobutton"
+    <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="GPS" />
+            android:layout_alignTop="@+id/method"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="273dp"
+            android:layout_marginRight="273dp"
+            android:checkedButton="@+id/first"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/qr_radiobutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
-            android:text="QR Code" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/gps_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="GPS" />
+
+            <RadioButton
+                android:id="@+id/qr_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="QR Code" />
+        </RadioGroup>
+
 
     <android.support.design.button.MaterialButton
         android:id="@+id/submit_button"
         style="@style/Widget.SnoozeMeNot.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="157dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="281dp"
         android:text="@string/button_submit" />
+
 
 </RelativeLayout>
