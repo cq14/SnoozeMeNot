@@ -11,10 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.support.v7.widget.Toolbar;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar myToolbar;
     FloatingActionButton createAlarm;
 
     @Override
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         manager.set(AlarmManager.RTC_WAKEUP, System)
         */
 
+        myToolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(myToolbar);
 
         createAlarm = findViewById(R.id.create_alarm);
         createAlarm.setOnClickListener(new View.OnClickListener(){

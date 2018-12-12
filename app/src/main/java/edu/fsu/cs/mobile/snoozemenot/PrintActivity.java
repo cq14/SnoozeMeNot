@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class PrintActivity extends AppCompatActivity {
+public class  PrintActivity extends AppCompatActivity {
 
     ImageView qrcode;
     Button share;
