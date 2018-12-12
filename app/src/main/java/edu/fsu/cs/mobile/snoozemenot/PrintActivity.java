@@ -55,8 +55,9 @@ public class  PrintActivity extends AppCompatActivity {
                 }
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        //Commented out to prevent null object reference
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar();
     }
 
     @Override
