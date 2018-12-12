@@ -68,7 +68,6 @@ public class CreateUpdateAlarm extends AppCompatActivity {
     }
 
     private boolean isTimeValid(@Nullable Editable text) {
-        //TO:DO - Correct implementation to see if time is valid
-        return text != null && text.length() <= 5;
+        return text != null && text.length() >= 5;
     }
 }

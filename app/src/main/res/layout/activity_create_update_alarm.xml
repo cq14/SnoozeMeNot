@@ -90,15 +90,14 @@
 
 
     <android.support.design.button.MaterialButton
-        android:id="@+id/submit_button"
-        style="@style/Widget.SnoozeMeNot.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="281dp"
-        android:text="@string/button_submit" />
+            android:id="@+id/submit_button"
+            style="@style/Widget.SnoozeMeNot.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="157dp"
+            android:text="@string/button_submit" />
 
 
 </RelativeLayout>
