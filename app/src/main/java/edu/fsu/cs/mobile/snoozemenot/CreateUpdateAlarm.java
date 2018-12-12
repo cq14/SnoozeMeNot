@@ -68,6 +68,24 @@ public class CreateUpdateAlarm extends AppCompatActivity {
     }
 
     private boolean isTimeValid(@Nullable Editable text) {
-        return text != null && text.length() >= 5;
+        boolean verify;
+        String time = text.toString();
+        if(time.length() == 5 && (time.charAt(0)!='1' || time.charAt(2)!=':' || time.charAt(3) - '0' >= 6)) {
+            verify = false;
+            Log.i("CreateUpdateAlarm","length5");
+            Log.i("CreateUpdateAlarm","time.char(0): "+time.charAt(0));
+            Log.i("CreateUpdateAlarm","time.char(2): "+time.charAt(2));
+            Log.i("CreateUpdateAlarm","time.char(3): "+time.charAt(3));
+        }
+
+        else if(time.length()==4 && time.charAt(2)- '0' >= 6 && time.charAt(1)!=':') {
+            verify = false;
+            Log.i("CreateUpdateAlarm","length4");
+            Log.i("CreateUpdateAlarm", "time.char(2): " + time.charAt(2));
+            Log.i("CreateUpdateAlarm","time.charAt(1): " +time.charAt(1));
+        }
+        else
+            verify = true;
+        return text != null && verify;
     }
 }
