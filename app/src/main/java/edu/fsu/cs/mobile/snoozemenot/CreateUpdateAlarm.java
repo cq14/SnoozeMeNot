@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
 public class CreateUpdateAlarm extends AppCompatActivity {
 
     Toolbar myToolbar;
-    TextInputLayout timeTextLayout;
-    TextInputEditText time_entry;
+    TextInputLayout timeTextLayout, nameTextLayout;
+    TextInputEditText time_entry, name_entry;
     Spinner am_pm;
     RadioButton qr, gps;
     MaterialButton submit;
@@ -35,12 +35,12 @@ public class CreateUpdateAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_create_update_alarm);
         myToolbar = findViewById(R.id.create_edit_app_bar);
         timeTextLayout = findViewById(R.id.time_text_input);
+        nameTextLayout = findViewById(R.id.name_input);
         setSupportActionBar(myToolbar);
         String mode = "";
         time_entry = findViewById(R.id.time_entry);
+        name_entry = findViewById(R.id.name_entry);
         am_pm = findViewById(R.id.am_pm);
-        qr = findViewById(R.id.qr_radiobutton);
-        gps = findViewById(R.id.gps_radiobutton);
         submit = findViewById(R.id.submit_button);
         mode = getIntent().getStringExtra("mode");
 
@@ -66,17 +66,26 @@ public class CreateUpdateAlarm extends AppCompatActivity {
                     timeTextLayout.setError(null);
                     //Create alarm here
                 }
+
+                if(!isNameValid(name_entry.getText())) {
+                    nameTextLayout.setError("Name required");
+                } else {
+                    nameTextLayout.setError(null);
+                }
+
+
             }
+
         });
 
     }
 
     private boolean isTimeValid(@Nullable Editable text) {
-        Pattern pattern;
-        Matcher matcher;
         String TIME12HOURS_PATTERN = "^(0?[1-9]|1[0-2]):[0-5][0-9]$";
-        pattern = Pattern.compile(TIME12HOURS_PATTERN);
-        matcher = pattern.matcher(text.toString());
+        Pattern pattern = Pattern.compile(TIME12HOURS_PATTERN);
+        Matcher matcher = pattern.matcher(text.toString());
         return matcher.matches();
     }
+
+    private boolean isNameValid(@Nullable Editable text) {return text != null;}
 }
