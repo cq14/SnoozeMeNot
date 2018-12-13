@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +30,11 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.TimePicker;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.zxing.Result;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,12 +45,15 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private static final int CREATE_ACTIVITY_REQUEST_CODE = 0;
+    private static final String MYPREFERENCES = "key";
 
     Toolbar myToolbar;
     FloatingActionButton createAlarm;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     FrameLayout frameLayout;
+    Gson gson;
+    SharedPreferences shref;
 
     private List<AlarmObject> alarmObjectList;
     private RecyclerView recyclerView;
@@ -62,7 +69,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         frameLayout = (FrameLayout) findViewById(R.id.frame_overlay);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        alarmObjectList = new ArrayList<AlarmObject>();
+
+        gson = new Gson();
+        shref = this.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+        String response = shref.getString("alarms","");
+        if(response.isEmpty())
+            alarmObjectList = new ArrayList<AlarmObject>();
+        else
+            alarmObjectList = gson.fromJson(response, new TypeToken<List<AlarmObject>>() {}.getType());
+
         alarmAdapter = new AlarmObjectAdapter(alarmObjectList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -171,6 +186,17 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 AlarmObject alarmObject = new AlarmObject(timeString, amPmString, nameString, true);
                 alarmObjectList.add(alarmObject);
                 alarmAdapter.notifyDataSetChanged();
+
+                SharedPreferences.Editor editor;
+                shref = this.getSharedPreferences(MYPREFERENCES, this.MODE_PRIVATE);
+
+                gson = new Gson();
+                String jsonAlarms = gson.toJson(alarmObjectList);
+
+                editor = shref.edit();
+                editor.remove("alarms").apply();
+                editor.putString("alarms", jsonAlarms);
+                editor.commit();
             }
         }
     }
