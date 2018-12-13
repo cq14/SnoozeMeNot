@@ -1,5 +1,6 @@
 package edu.fsu.cs.mobile.snoozemenot;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
@@ -65,6 +66,14 @@ public class CreateUpdateAlarm extends AppCompatActivity {
                 } else {
                     timeTextLayout.setError(null);
                     //Create alarm here
+                    //--------Send back data to main------
+                    Intent myIntent = new Intent();
+                    String passBack = time_entry.getText().toString();
+                    String amPm = am_pm.getSelectedItem().toString();
+                    myIntent.putExtra("time", passBack);
+                    myIntent.putExtra("amPm", amPm);
+                    setResult(RESULT_OK, myIntent);
+                    finish();
                 }
 
                 if(!isNameValid(name_entry.getText())) {
