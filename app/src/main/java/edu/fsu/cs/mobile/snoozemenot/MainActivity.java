@@ -1,10 +1,19 @@
 package edu.fsu.cs.mobile.snoozemenot;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,14 +26,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 import android.widget.TimePicker;
+
+import com.google.zxing.Result;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private static final int CREATE_ACTIVITY_REQUEST_CODE = 0;
 
@@ -32,22 +46,36 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton createAlarm;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
+    FrameLayout frameLayout;
+
     private List<AlarmObject> alarmObjectList;
     private RecyclerView recyclerView;
     private AlarmObjectAdapter alarmAdapter;
+
+    private ZXingScannerView scannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        alarmObjectList = new ArrayList<AlarmObject>();
+        frameLayout = (FrameLayout) findViewById(R.id.frame_overlay);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        alarmObjectList = new ArrayList<AlarmObject>();
         alarmAdapter = new AlarmObjectAdapter(alarmObjectList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(alarmAdapter);
+
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(0);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        }
         /*
         //use alarm trigger to trip alarm when time is met
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -72,6 +100,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    AlarmReceiver broadcastReceiver = new AlarmReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent){
+            scannerView = new ZXingScannerView(getApplicationContext());
+            frameLayout.addView(scannerView);
+            createAlarm.setEnabled(false);
+            scannerView.setResultHandler(MainActivity.this);
+            scannerView.startCamera();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,12 +165,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(this, AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+                registerReceiver(broadcastReceiver, new IntentFilter("ALARM_CREATED"));
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
                 System.out.print("Test = " + hourTime + " " + minTime + "\n");
                 AlarmObject alarmObject = new AlarmObject(timeString, amPmString, nameString, true);
                 alarmObjectList.add(alarmObject);
                 alarmAdapter.notifyDataSetChanged();
             }
+        }
+    }
+
+    @Override
+    public void handleResult(Result result){
+        if(result.getText().equals("SnoozeMeNot")){
+            scannerView.stopCamera();
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            alarmManager.cancel(pendingIntent);
+            createAlarm.setEnabled(true);
+            frameLayout.removeView(scannerView);
         }
     }
 }

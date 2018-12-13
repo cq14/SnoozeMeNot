@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+<FrameLayout
+    android:id="@+id/frame_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
@@ -41,7 +44,7 @@
         </android.support.v4.widget.NestedScrollView>
 
     </FrameLayout>
-
+</FrameLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/create_alarm"
         android:layout_width="wrap_content"
