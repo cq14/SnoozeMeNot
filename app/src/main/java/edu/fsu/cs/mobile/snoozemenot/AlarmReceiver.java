@@ -8,6 +8,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.widget.Toast;
 
+// https://www.codingconnect.net/android-application-creates-alarm-clock/
+
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
@@ -21,7 +23,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
         ringtone.play();
 
-        // gonna have to do stuff here to shutt the alarm up
+
+        // gonna have to do stuff here to shut the alarm up
 
     }
 }
