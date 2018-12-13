@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SnoozeMeNot</string>
+    <string name="share_text">Share</string>
     <string name="qr_code_radio_text">QR Code</string>
     <string name="gps_radio_text">GPS</string>
     <string name="button_submit">Submit</string>
