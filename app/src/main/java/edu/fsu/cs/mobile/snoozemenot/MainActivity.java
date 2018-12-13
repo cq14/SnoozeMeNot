@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             String[] minHour = timeString.split("[:]");
             int hourTime = Integer.valueOf(minHour[0]);
             int minTime = Integer.valueOf(minHour[1]);
-            if (amPmString.equals("PM") && hourTime > 12)
+            if (amPmString.equals("PM") && hourTime < 12)
                 hourTime += 12;
             if (amPmString.equals("AM") && hourTime == 12)
                 hourTime = 0;
@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
             calendar.set(Calendar.MINUTE, minTime);
             Intent intent = new Intent(this, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            System.out.print("Test = " + hourTime + " " + minTime + "\n");
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            // System.out.print("Test = " + hourTime + " " + minTime + "\n");
         }
     }
 }
