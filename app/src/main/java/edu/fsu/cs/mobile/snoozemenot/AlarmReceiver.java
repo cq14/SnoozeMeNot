@@ -19,15 +19,18 @@ import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    public static Ringtone ringtone;
     @Override
     public void onReceive(Context context, Intent intent) {
+
         Toast.makeText(context, "WAKE UP!", Toast.LENGTH_LONG).show();
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(context, alarmUri);
         if (alarmUri == null)
         {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+
         ringtone.play();
         //added cause I can't hear the alarm
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);

@@ -251,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             alarmManager.cancel(pendingIntent);
             createAlarm.setEnabled(true);
             frameLayout.removeView(scannerView);
+            AlarmReceiver.ringtone.stop();
         }
     }
 }
