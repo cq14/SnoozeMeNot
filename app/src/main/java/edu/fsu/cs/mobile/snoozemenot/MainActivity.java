@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                     }
 
                     @Override public void onLongItemClick(View view, final int position) {
-                        Toast.makeText(MainActivity.this, "long click", Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setMessage("Are you sure you want to delete this alarm?")
                                 .setTitle("Alarm Delete");
