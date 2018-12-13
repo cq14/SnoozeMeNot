@@ -52,7 +52,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setTicker(message)
                 .setContentTitle(title)
                 .setContentText(message)
-                .addAction(R.drawable.ic_launcher_foreground, "Action Button", pendingIntent)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) context
