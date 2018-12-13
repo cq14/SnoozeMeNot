@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             calendar.set(Calendar.MINUTE, minTime);
             Intent intent = new Intent(this, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             // System.out.print("Test = " + hourTime + " " + minTime + "\n");
         }
     }
