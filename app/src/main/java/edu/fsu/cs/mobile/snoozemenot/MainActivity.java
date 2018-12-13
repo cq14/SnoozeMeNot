@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +19,9 @@ import android.widget.Button;
 import android.support.v7.widget.Toolbar;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,13 +32,22 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton createAlarm;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
+    private List<AlarmObject> alarmObjectList;
+    private RecyclerView recyclerView;
+    private AlarmObjectAdapter alarmAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        alarmObjectList = new ArrayList<AlarmObject>();
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        alarmAdapter = new AlarmObjectAdapter(alarmObjectList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(alarmAdapter);
         /*
         //use alarm trigger to trip alarm when time is met
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -90,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 timeString = data.getStringExtra("time");
                 amPmString = data.getStringExtra("amPm");
-
+                String nameString = data.getStringExtra("name");
                 String[] minHour = timeString.split("[:]");
                 int hourTime = Integer.valueOf(minHour[0]);
                 int minTime = Integer.valueOf(minHour[1]);
@@ -114,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
                 System.out.print("Test = " + hourTime + " " + minTime + "\n");
+                AlarmObject alarmObject = new AlarmObject(timeString, amPmString, nameString, true);
+                alarmObjectList.add(alarmObject);
+                alarmAdapter.notifyDataSetChanged();
             }
         }
     }

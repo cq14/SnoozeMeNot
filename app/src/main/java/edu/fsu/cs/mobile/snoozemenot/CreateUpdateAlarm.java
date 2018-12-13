@@ -70,8 +70,10 @@ public class CreateUpdateAlarm extends AppCompatActivity {
                     Intent myIntent = new Intent();
                     String passBack = time_entry.getText().toString();
                     String amPm = am_pm.getSelectedItem().toString();
+                    String title = name_entry.getText().toString();
                     myIntent.putExtra("time", passBack);
                     myIntent.putExtra("amPm", amPm);
+                    myIntent.putExtra("name", title);
                     setResult(RESULT_OK, myIntent);
                     finish();
                 }
