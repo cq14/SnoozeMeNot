@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(this, AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
                 System.out.print("Test = " + hourTime + " " + minTime + "\n");
             }
         }
