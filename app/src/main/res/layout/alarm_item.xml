@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="26dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -50,7 +50,7 @@
                     android:id="@+id/alarm_switch"
                     android:layout_width="258dp"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="30dp" />
+                    android:paddingHorizontal="36dp" />
 
 
             </LinearLayout>
