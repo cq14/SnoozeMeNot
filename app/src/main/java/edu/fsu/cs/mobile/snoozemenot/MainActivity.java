@@ -85,32 +85,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CREATE_ACTIVITY_REQUEST_CODE) {
-            String timeString = data.getStringExtra("time");
-            String amPmString = data.getStringExtra("amPm");
-            String[] minHour = timeString.split("[:]");
-            int hourTime = Integer.valueOf(minHour[0]);
-            int minTime = Integer.valueOf(minHour[1]);
-            if (amPmString.equals("PM") && hourTime < 12)
-                hourTime += 12;
-            if (amPmString.equals("AM") && hourTime == 12)
-                hourTime = 0;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, hourTime);
-            calendar.set(Calendar.MINUTE, minTime);
-            calendar.set(Calendar.SECOND, 0);
-            long time=(calendar.getTimeInMillis()-(calendar.getTimeInMillis()%60000));
-            if(System.currentTimeMillis()>time)
-            {
-                if (calendar.AM_PM == 0)
-                    time = time + (1000*60*60*12);
-                else
-                    time = time + (1000*60*60*24);
+
+            String timeString, amPmString;
+            if (data != null) {
+                timeString = data.getStringExtra("time");
+                amPmString = data.getStringExtra("amPm");
+
+                String[] minHour = timeString.split("[:]");
+                int hourTime = Integer.valueOf(minHour[0]);
+                int minTime = Integer.valueOf(minHour[1]);
+                if (amPmString.equals("PM") && hourTime < 12)
+                    hourTime += 12;
+                if (amPmString.equals("AM") && hourTime == 12)
+                    hourTime = 0;
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, hourTime);
+                calendar.set(Calendar.MINUTE, minTime);
+                calendar.set(Calendar.SECOND, 0);
+                long time = (calendar.getTimeInMillis() - (calendar.getTimeInMillis() % 60000));
+                if (System.currentTimeMillis() > time) {
+                    if (calendar.AM_PM == 0)
+                        time = time + (1000 * 60 * 60 * 12);
+                    else
+                        time = time + (1000 * 60 * 60 * 24);
+                }
+                Intent intent = new Intent(this, AlarmReceiver.class);
+                pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                System.out.print("Test = " + hourTime + " " + minTime + "\n");
             }
-            Intent intent = new Intent(this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-            System.out.print("Test = " + hourTime + " " + minTime + "\n");
         }
     }
 }
