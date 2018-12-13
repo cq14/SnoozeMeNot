@@ -3,10 +3,12 @@ package edu.fsu.cs.mobile.snoozemenot;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         notificationManager.cancel(0);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
         /*
         //use alarm trigger to trip alarm when time is met
@@ -114,6 +117,45 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
         });
 
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override public void onLongItemClick(View view, final int position) {
+                        Toast.makeText(MainActivity.this, "long click", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Are you sure you want to delete this alarm?")
+                                .setTitle("Alarm Delete");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alarmObjectList.remove(position);
+                                alarmAdapter.notifyDataSetChanged();
+                                SharedPreferences.Editor editor;
+                                shref = MainActivity.this.getSharedPreferences(MYPREFERENCES, MainActivity.this.MODE_PRIVATE);
+
+                                gson = new Gson();
+                                String jsonAlarms = gson.toJson(alarmObjectList);
+
+                                editor = shref.edit();
+                                editor.remove("alarms").apply();
+                                editor.putString("alarms", jsonAlarms);
+                                editor.commit();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                })
+        );
     }
 
     AlarmReceiver broadcastReceiver = new AlarmReceiver(){
