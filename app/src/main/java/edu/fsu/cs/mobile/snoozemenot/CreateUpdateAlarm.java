@@ -81,8 +81,6 @@ public class CreateUpdateAlarm extends AppCompatActivity {
                 } else {
                     nameTextLayout.setError(null);
                 }
-
-
             }
 
         });
